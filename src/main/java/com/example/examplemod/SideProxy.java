@@ -1,5 +1,6 @@
 package com.example.examplemod;
 
+import com.example.examplemod.Command.SimpleCommand;
 import com.example.examplemod.init.ModBlocks;
 import com.example.examplemod.init.ModItems;
 
@@ -8,6 +9,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLClientLaunchProvider;
+import net.minecraftforge.fml.loading.FMLLoader;
 
 
 public class SideProxy {
@@ -31,10 +34,12 @@ public class SideProxy {
     private static void processIMC(final InterModProcessEvent event)
     {
     }
-
+    @SubscribeEvent
+    public static void clientStarting(FMLLoader event){
+    }
     @SubscribeEvent
     public static void serverStarting(FMLServerStartingEvent event){
-
+        SimpleCommand.register(event.getCommandDispatcher());
     }
     
     static class Client extends SideProxy{
