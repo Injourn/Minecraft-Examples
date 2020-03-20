@@ -1,6 +1,7 @@
 package com.example.examplemod.init;
 
 import com.example.examplemod.ExampleMod;
+import com.example.examplemod.entities.TutorialEntity;
 
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -14,7 +15,7 @@ import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraftforge.event.RegistryEvent;
 
 public class TutorialEntities{
-    public static EntityType<?> TUTORIAL_ENTITY;
+    public static EntityType<?> TUTORIAL_ENTITY = EntityType.Builder.create(TutorialEntity::new, EntityClassification.CREATURE).build(ExampleMod.ModId + ":tutorial_entity").setRegistryName(ExampleMod.getId("tutorial_entity"));
     public static Item tutorial_entity_egg;
     public static void registerEntitySpawnEggs(final RegistryEvent.Register<Item> event){
         
@@ -23,7 +24,7 @@ public class TutorialEntities{
         );
     }
     public static void registerEntityWorldSpawns(){
-        registerEntityWorldSpawn(TUTORIAL_ENTITY,EntityClassification.CREATURE,Biomes.PLAINS,Biomes.BEACH,Biomes.FOREST);
+        registerEntityWorldSpawn(TUTORIAL_ENTITY,Biomes.PLAINS,Biomes.BEACH,Biomes.FOREST);
     }
     public static Item registerEntitySpawnEgg(EntityType<?> type,int primaryColorIn,int secondaryColorIn,String name){
         SpawnEggItem item = new SpawnEggItem(type,primaryColorIn,
@@ -39,11 +40,17 @@ public class TutorialEntities{
         item.setRegistryName(ExampleMod.getId(name));
         return item;
     }
-    public static void registerEntityWorldSpawn(EntityType<?> entity, EntityClassification classification, Biome... biomes){
+    public static void registerEntityWorldSpawn(EntityType<?> entity, Biome... biomes){
         for(Biome biome : biomes){
             if(biome != null){
-                biome.getSpawns(classification).add(new SpawnListEntry(entity,10,1,10));
+                biome.getSpawns(entity.getClassification()).add(new SpawnListEntry(entity,10,1,10));
             }
         }
+    }
+    public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event){
+        event.getRegistry().registerAll(
+            TUTORIAL_ENTITY
+        );
+        registerEntityWorldSpawns();
     }
 }

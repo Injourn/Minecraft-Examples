@@ -1,6 +1,7 @@
 package com.example.examplemod;
 
 import com.example.examplemod.Command.SimpleCommand;
+import com.example.examplemod.client.renders.TutorialRenderRegistry;
 import com.example.examplemod.init.ModBlocks;
 import com.example.examplemod.init.ModItems;
 import com.example.examplemod.init.TutorialEntities;
@@ -48,7 +49,7 @@ public class SideProxy {
             FMLJavaModLoadingContext.get().getModEventBus().addListener(Client::clientSetup);;
         }
         private static void clientSetup(FMLClientSetupEvent event){
-
+            TutorialRenderRegistry.registryEntityRenders();
         }
     }
     static class Server extends SideProxy{
