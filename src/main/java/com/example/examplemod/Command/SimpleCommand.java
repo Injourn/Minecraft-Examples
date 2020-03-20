@@ -2,6 +2,7 @@ package com.example.examplemod.Command;
 
 import com.mojang.brigadier.CommandDispatcher;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
