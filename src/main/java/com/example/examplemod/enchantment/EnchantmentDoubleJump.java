@@ -55,6 +55,15 @@ public class EnchantmentDoubleJump extends Enchantment {
         if(player.playerController.isNotCreative() && player.player.movementInput.jump && !player.player.onGround){
             player.playerController.setGameType(GameType.CREATIVE);         
             //Do stuff here
-        }        
+        } 
+        /*LivingEntity entity = event.getEntityLiving();
+            if(entity instanceof PlayerEntity)
+            {
+                PlayerEntity player = (PlayerEntity) entity;
+                ItemStack stack = player.getItemStackFromSlot(EquipmentSlotType.FEET);
+                if(!stack.isEmpty())
+                {
+                    Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
+                    if(enchantments.containsKey(ModEnchantments.STOMPING))*/
     }
 }
