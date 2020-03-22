@@ -1,5 +1,8 @@
 package com.example.examplemod.init;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import javax.annotation.Nullable;
 
 import com.example.examplemod.ExampleMod;
@@ -14,6 +17,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
  
 public class ModBlocks{
+  static final Map<String,BlockItem> BLOCKS_TO_REGISTER = new LinkedHashMap<>();
   public static Block blueStone;
 
   public static void registerAll(RegistryEvent.Register<Block> event){
@@ -33,8 +37,22 @@ public class ModBlocks{
     block.setRegistryName(id);
     ForgeRegistries.BLOCKS.register(block);
     if(item != null){
-      ModItems.BLOCKS_TO_REGISTER.put(name,item);
+      ModBlocks.BLOCKS_TO_REGISTER.put(name,item);
     }
     return block;
+  }
+  public static void registerAllBlock(RegistryEvent.Register<Item> event){
+    if(!event.getName().equals(ForgeRegistries.ITEMS.getRegistryName())) return;
+      //Blocks
+      BLOCKS_TO_REGISTER.forEach(ModBlocks::registerBlock);
+
+      //Items
+  }
+
+  private static <T extends Item> T registerBlock(String name, T item){
+    ResourceLocation id = ExampleMod.getId(name);
+    item.setRegistryName(id);
+    ForgeRegistries.ITEMS.register(item);
+    return item;
   }
 }

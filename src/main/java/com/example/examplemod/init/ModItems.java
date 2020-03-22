@@ -1,29 +1,25 @@
 package com.example.examplemod.init;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
 import com.example.examplemod.ExampleMod;
-import net.minecraft.util.ResourceLocation;
+import com.example.examplemod.Item.ItemTest;
+
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ObjectHolder;
 import net.minecraft.item.Item;
-import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemGroup;
  
+@ObjectHolder(ExampleMod.ModId)
+@Mod.EventBusSubscriber(modid = ExampleMod.ModId, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModItems{
-  static final Map<String,BlockItem> BLOCKS_TO_REGISTER = new LinkedHashMap<>();
+  
+  public static final Item ITEMTEST = null;
 
-  public static void registerAll(RegistryEvent.Register<Item> event){
-    if(!event.getName().equals(ForgeRegistries.ITEMS.getRegistryName())) return;
-      //Blocks
-      BLOCKS_TO_REGISTER.forEach(ModItems::register);
-
-      //Items
-  }
-
-  private static <T extends Item> T register(String name, T item){
-    ResourceLocation id = ExampleMod.getId(name);
-    item.setRegistryName(id);
-    ForgeRegistries.ITEMS.register(item);
-    return item;
+  @SubscribeEvent  
+  public static void register(final RegistryEvent.Register<Item> event)
+  {
+    
+    event.getRegistry().register(new ItemTest(new Item.Properties().maxStackSize(64).group(ItemGroup.MISC)));
   }
 }

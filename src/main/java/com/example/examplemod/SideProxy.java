@@ -19,7 +19,7 @@ public class SideProxy {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(SideProxy::enqueueIMC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(SideProxy::processIMC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ModBlocks::registerAll);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(ModItems::registerAll);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(ModBlocks::registerAllBlock);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(Client::clientSetup);
         MinecraftForge.EVENT_BUS.register(this);
     }
