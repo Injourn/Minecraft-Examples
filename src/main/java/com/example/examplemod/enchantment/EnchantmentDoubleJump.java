@@ -4,7 +4,6 @@ import java.util.Map;
 
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.init.ModEnchantments;
-import com.example.examplemod.network.message.MessageJump;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -20,8 +19,7 @@ public class EnchantmentDoubleJump extends Enchantment {
 
     public EnchantmentDoubleJump() {
         super(Rarity.RARE, EnchantmentType.ARMOR_LEGS, new EquipmentSlotType[] {EquipmentSlotType.LEGS});        
-        this.setRegistryName(ExampleMod.getId("double_jump"));        
-
+        this.setRegistryName(ExampleMod.getId("double_jump"));
     }
 
     @Override
@@ -44,15 +42,19 @@ public class EnchantmentDoubleJump extends Enchantment {
         return this.getMinEnchantability(level);
     }
         
-    public static void DoubleJumpHandle(MessageJump message,ServerPlayerEntity player){
-        ItemStack stack = player.getItemStackFromSlot(EquipmentSlotType.LEGS);
-        if(!stack.isEmpty()){
-            Map<Enchantment,Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
-            ExampleMod.LOGGER.debug(enchantments.values().toArray()[0]);
+    public static void DoubleJumpHandle(boolean message,ServerPlayerEntity player){
+        ItemStack stack = player.getItemStackFromSlot(EquipmentSlotType.LEGS);        
+        if(!stack.isEmpty()){                
+            Map<Enchantment,Integer> enchantments = EnchantmentHelper.getEnchantments(stack);            
             if(enchantments.containsKey(ModEnchantments.DOUBLE_JUMP)){
-                player.moveVertical = .4f;
-                ExampleMod.LOGGER.debug("DoubleJumpActive");
+                if(message){
+                    player.jump();
+                    player.velocityChanged = true;
+                }
+                else;
             }
+            
         }
+        
     }
 }

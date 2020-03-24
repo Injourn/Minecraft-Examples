@@ -10,33 +10,31 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent.Context;
 
 public class MessageJump implements IMessage<MessageJump> {
-    private int airJumps;
-    // TODO private bool onground
+    private boolean onGround;
 
     public MessageJump(){
-        airJumps = 0;
+        onGround = true;
     }
-    public MessageJump(int jumps){
-        airJumps = jumps;
+    public MessageJump(boolean jumps){
+        onGround = jumps;
 
     }
     @Override
     public void encode(MessageJump message, PacketBuffer buffer) {
-        buffer.writeInt(message.airJumps);
+        buffer.writeBoolean(message.onGround);
 
     }
 
     @Override
     public MessageJump decode(PacketBuffer buffer) {        
-        return new MessageJump(buffer.readInt());
+        return new MessageJump(buffer.readBoolean());
     }
 
     @Override
-    public void handle(MessageJump message, Supplier<Context> supplier) {
-        ExampleMod.LOGGER.debug("Here");
+    public void handle(MessageJump message, Supplier<Context> supplier) {        
         supplier.get().enqueueWork(() -> {
             ServerPlayerEntity player = supplier.get().getSender();
-            EnchantmentDoubleJump.DoubleJumpHandle(message,player);
+            EnchantmentDoubleJump.DoubleJumpHandle(message.onGround,player);
         });
         
 

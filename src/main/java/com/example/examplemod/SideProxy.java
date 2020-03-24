@@ -3,6 +3,7 @@ package com.example.examplemod;
 import com.example.examplemod.Command.SimpleCommand;
 import com.example.examplemod.client.ClientHandler;
 import com.example.examplemod.init.ModBlocks;
+import com.example.examplemod.network.PacketHandler;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -24,7 +25,7 @@ public class SideProxy {
     }
 
     private static void commonSetup(FMLCommonSetupEvent event){
-
+        PacketHandler.register();
     }
     private static void enqueueIMC(final InterModEnqueueEvent event)
     {        

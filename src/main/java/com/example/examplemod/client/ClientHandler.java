@@ -12,19 +12,20 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.Mod;
 
-@OnlyIn(Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = ExampleMod.ModId)
 public class ClientHandler{
+    @OnlyIn(Dist.CLIENT)
     public static void setup(){
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.TESTMOB, EntityTestRenderer::new);
     }
+    
     @SubscribeEvent
-    public static void onKeyPress(InputEvent.KeyInputEvent event){
-        Minecraft player = Minecraft.getInstance();
-        System.out.println("test");
-        if(player.player.movementInput.jump && !player.player.onGround){
-            ExampleMod.LOGGER.info("Please?");      
-            PacketHandler.instance.sendToServer(new MessageJump());
+    public static void onKeyPress(InputEvent.KeyInputEvent event){        
+        Minecraft player = Minecraft.getInstance(); 
+        if(player.gameSettings.keyBindJump.isKeyDown() && event.getAction() == 1){ 
+            PacketHandler.instance.sendToServer(new MessageJump(!player.player.onGround));
         }         
     }
 }
