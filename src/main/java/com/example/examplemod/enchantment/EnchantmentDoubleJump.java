@@ -4,20 +4,15 @@ import java.util.Map;
 
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.init.ModEnchantments;
+import com.example.examplemod.network.message.MessageJump;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.GameType;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
 
 
 @Mod.EventBusSubscriber(modid = ExampleMod.ModId)
@@ -48,22 +43,16 @@ public class EnchantmentDoubleJump extends Enchantment {
     {
         return this.getMinEnchantability(level);
     }
-    
-    @SubscribeEvent
-    public static void onPlayerJump(InputEvent.KeyInputEvent event){
-        Minecraft player = Minecraft.getInstance();
-        if(player.playerController.isNotCreative() && player.player.movementInput.jump && !player.player.onGround){
-            player.playerController.setGameType(GameType.CREATIVE);         
-            //Do stuff here
-        } 
-        /*LivingEntity entity = event.getEntityLiving();
-            if(entity instanceof PlayerEntity)
-            {
-                PlayerEntity player = (PlayerEntity) entity;
-                ItemStack stack = player.getItemStackFromSlot(EquipmentSlotType.FEET);
-                if(!stack.isEmpty())
-                {
-                    Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
-                    if(enchantments.containsKey(ModEnchantments.STOMPING))*/
+        
+    public static void DoubleJumpHandle(MessageJump message,ServerPlayerEntity player){
+        ItemStack stack = player.getItemStackFromSlot(EquipmentSlotType.LEGS);
+        if(!stack.isEmpty()){
+            Map<Enchantment,Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
+            ExampleMod.LOGGER.debug(enchantments.values().toArray()[0]);
+            if(enchantments.containsKey(ModEnchantments.DOUBLE_JUMP)){
+                player.moveVertical = .4f;
+                ExampleMod.LOGGER.debug("DoubleJumpActive");
+            }
+        }
     }
 }
