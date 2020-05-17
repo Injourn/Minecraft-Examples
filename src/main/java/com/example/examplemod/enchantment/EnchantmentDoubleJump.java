@@ -38,12 +38,12 @@ public class EnchantmentDoubleJump extends Enchantment {
 
     @Override
     public int getMinEnchantability(int level) {
-        return level * 10;
+        return 4 + 6 * level;
     }
 
     @Override
     public int getMaxEnchantability(int level) {
-        return this.getMinEnchantability(level) + 5;
+        return this.getMinEnchantability(level) + 10;
     }
     @SubscribeEvent
     public static void OnFallDown(LivingFallEvent event){
