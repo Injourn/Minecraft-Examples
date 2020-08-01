@@ -2,7 +2,6 @@ package com.example.examplemod.network.message;
 
 import java.util.function.Supplier;
 
-import com.example.examplemod.ExampleMod;
 import com.example.examplemod.enchantment.EnchantmentDoubleJump;
 
 import net.minecraft.entity.player.ServerPlayerEntity;

@@ -6,7 +6,10 @@ import com.example.examplemod.client.ClientHandler;
 import com.example.examplemod.init.ModBlocks;
 import com.example.examplemod.network.PacketHandler;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
@@ -19,8 +22,8 @@ public class SideProxy {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(SideProxy::commonSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(SideProxy::enqueueIMC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(SideProxy::processIMC);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(ModBlocks::registerAll);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(ModBlocks::registerAllBlock);
+        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Block.class, ModBlocks::registerAll);
+        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Item.class, ModBlocks::registerAllBlock);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(Client::clientSetup);
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -41,9 +44,13 @@ public class SideProxy {
     }
     @SubscribeEvent
     public static void serverStarting(FMLServerStartingEvent event){
-        SimpleCommand.register(event.getCommandDispatcher());
+        //SimpleCommand.register(event.getCommandDispatcher());
     }
     
+    @SubscribeEvent
+    public static void onCommandRegister(RegisterCommandsEvent event){
+        SimpleCommand.register(event.getDispatcher());
+    }
     static class Client extends SideProxy{
         Client(){
             

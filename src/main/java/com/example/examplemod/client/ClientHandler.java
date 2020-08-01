@@ -25,7 +25,8 @@ public class ClientHandler{
     public static void onKeyPress(InputEvent.KeyInputEvent event){        
         Minecraft player = Minecraft.getInstance(); 
         if(player.gameSettings.keyBindJump.isKeyDown() && event.getAction() == 1 && !player.player.isCreative()){ 
-            PacketHandler.instance.sendToServer(new MessageJump(!player.player.onGround));
+            //func_233570_aj_ accesses the "ClientPlayerEntity.onGround" variable
+            PacketHandler.instance.sendToServer(new MessageJump(!player.player.func_233570_aj_()));
         }         
     }
 }

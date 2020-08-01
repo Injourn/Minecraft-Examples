@@ -24,9 +24,9 @@ public class ExampleMod
     public static final Logger LOGGER = LogManager.getLogger();
 
     public ExampleMod() {
-        DistExecutor.runForDist(
-            () -> () -> new SideProxy.Client(), 
-            () -> () -> new SideProxy.Server()
+        DistExecutor.safeRunForDist(
+            () -> SideProxy.Client::new, 
+            () -> SideProxy.Server::new
         );
     }
     public static String getVersion(){

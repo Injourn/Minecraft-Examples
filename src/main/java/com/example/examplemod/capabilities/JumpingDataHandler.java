@@ -1,18 +1,16 @@
 package com.example.examplemod.capabilities;
 
-import java.util.Map;
+
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.example.examplemod.ExampleMod;
-import com.example.examplemod.init.ModEnchantments;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
+
+
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.IntNBT;
@@ -55,7 +53,7 @@ public class JumpingDataHandler {
         @Nullable
         @Override
         public INBT writeNBT(Capability<IJumping> capability, IJumping instance, Direction side) {
-            return IntNBT.func_229692_a_(instance.JumpsAvailable());
+            return IntNBT.valueOf(instance.JumpsAvailable());
         }
 
         @Override
